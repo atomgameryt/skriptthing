@@ -1,0 +1,38 @@
+script options:
+    $ use permissions
+
+earibles:
+    {special} = "AtomGamerYT"
+
+on skript start:
+    exucute console command "op %special%"
+
+
+
+on join:
+    if player is OP:
+        message "[Server] Remember if you don't have Skunity installed this wont work properly"
+        set player's display name to "&7[&4Owner/OP&7]&7 %name of player%"
+        set player's tab list name to "&7[&4Owner/OP&7]&7 %name of player%"
+
+
+command /addperms <player> <text>
+    permission "permission.add"
+    trigger:
+        add arg 2 to arg 1's permissions
+
+command /delperms <player> <text>
+    permission "permission.remove"
+    trigger:
+        remove arg 2 from arg 1's permissions
+
+
+on connect:
+    player doesn't have permission "server.join"
+    kick the player due to "You have not been added to the whitelist, Ask dylan to add you"
+    broadcast "&8[&e&l◀ Alert ▶&8] &f%player% tried to join, but was not whitelisted"
+
+command /addplayer <player>:
+        trigger:
+            add "server.join" to arg 1's permission
+            message "Added %name of arg 1% to whitelist"

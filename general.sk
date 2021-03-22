@@ -1,0 +1,163 @@
+# Events
+
+on damage of a player:
+	set {timer} to 15
+	attacker is a player
+	if {onc.%victim%} or {onc.%attacker%} is true:
+		set {timer} to 15
+		stop
+	set {onc.%victim%} and {onc.%attacker%} to true
+	message "&6You are in combat" to attacker and victim
+	wait {timer} seconds
+	set {onc.%victim%} and {onc.%attacker%} to false
+	message "&6You are not longer in combat" to attacker and victim
+	
+on quit:
+	if {onc.%player%} is true
+		kill the player
+		broadcast "&6&l%player% has logged out during combat"
+
+on join:
+    message "&6There are %number of all players% players online!"
+    message "&6The TPS of the server is %tps%"
+
+on first join:
+	send action bar "&4&lWelcome to the server" to event-player
+
+on chat:
+    set the chat format to "%player% >>> %message%"
+
+on death:
+    launch creeper firework colored red at player timed 1
+
+on mine of diamond ore:
+	change of 10%
+		cancel drops of items
+		drop 1 diamond_block
+		message "&6You got lucky!!!"
+
+on mine of gold ore:
+	change of 10%
+		cancel drops of items
+		drop 1 gold_block
+		message "&6You got lucky!!!"
+
+on mine of iron ore:
+	change of 10%
+		cancel drops of items
+		drop 1 iron_block
+		message "&6You got lucky!!!"
+		
+
+
+
+
+
+
+command /vanish <player>:
+    permission: commands.fly
+    permission message: "&6Hey you don't have the permission to do this command"
+    trigger:
+        if arg 1 is not set:
+            set arg 1 to command sender
+        if {vanish.%arg 1%} is true:
+            reveal %arg 1% from all players
+            set {vanish.%arg1%} to false
+        if {vanish.%arg 1%} is false:
+            hide %arg 1% from all players
+            set {vanish.%arg 1%} to true
+
+command /pvp <text>:
+	permission: pvp.toggle
+	permission message: "&6&lYou can't do that"
+	trigger:	
+		set {pvp} to true
+		if arg 1 is not set:
+			message "&6&lUsage:"
+			message "&6/pvp enable/disable"
+			message "&6/pvp true/false"
+			message "&6/pvp on/off"
+		if arg 1 is "enable" or "true" or "on":
+			if {pvp} is true:
+				message "&6PVP is already on"
+				stop
+		if arg 1 is "enable" or "true" or "on":
+			enable PvP in all worlds
+			set {pvp} to true
+			message "&6PVP is enabled"
+		if arg 1 is "false" or "off" or "disable":
+			if {pvp} is false:
+				message "&6PVP is already off"
+				stop
+		if arg 1 is "false" or "off" or "disable":
+			disable PvP in all worlds
+			set {pvp} to false
+			message "&6PVP has been disabled"
+			
+command /tp2p <player>:
+	permission: command.tp2p
+	permission message: "&6&lYou can't do that"
+	trigger:
+		if player-argument is not set:
+			message "&6You have to set a player to teleport to"
+			stop
+		teleport command sender to player-argument
+		message "&6Teleported you to %player-argument%"
+
+
+command /tps:
+    cooldown: 10 seconds
+    cooldown message: "You can use this command in %remaining time%"
+    trigger:
+        message "&6The TPS of the server is currenly %tps%"
+
+command /fly:
+    permission: commands.fly
+    permission message: "&6Hey you don't have the permission to do this command"
+    trigger:
+        if {fly.%player%} is not set:
+            Send "&bFlight mode is now &3enabled&b." to player
+            set player's flight mode to true
+            Set {fly.%player%} to true
+            Stop
+        send "&bFlight mode is now &3disabled&b." to player
+        set player's flight mode to false
+        delete {fly.%player%}
+        Stop
+
+
+
+command /sayall <text>:
+    permission: "server.sayall"
+    trigger:
+        force all players to send the message text-argument
+
+command /tphere <player>:
+	permission: commands.tphere
+	permission message: "&6&lHey, you can't do that"
+	trigger:
+		if player-argument is not set:
+			message "Set a player to be teleported to you"
+			stop		
+		teleport player-argument to command sender 
+		message "Teleported %player-argument% to you"
+
+command /gamemode:
+	permission: command.guigm
+	permission message: "&6&lHey, you can't do that"
+	trigger:
+		open virtual chest inventory with size 3 named "&4&lGamemode GUI"
+		format gui slot 11 with grass block named "&2Survival" with lore "&6Change gamemode to:" and "&6Survival" to run:
+			set player's gamemode to survival
+			message "&6Set your &2gamemode&6to survival"
+			close player's inventory
+		format gui slot 15 with bedrock named "&2Creative" with lore "&6Change gamemode to:" and "&6Creative" to run:
+			set player's gamemode to creative
+			message "&6Set your &2gamemode&6to creative"
+			close player's inventory
+			
+		
+			
+			
+		
+		
