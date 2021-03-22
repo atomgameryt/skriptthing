@@ -1,0 +1,3 @@
+every 10 minutes in world:
+	broadcast "&c&lServer&r » &7The TPS is %tps%"
+	

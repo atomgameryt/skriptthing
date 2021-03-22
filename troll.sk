@@ -1,0 +1,47 @@
+#  F U N I  T R O L L I N G 
+#  S K R I P T
+Options:
+	logo: &c&lTroll »
+
+
+
+command /fakecrash <player>:
+	permission: troll.crash
+	permission message: "&c&lHey, you can't do that"
+	trigger:
+		if player-argument is not set:
+			message "Please set a player"
+			stop
+		kick the player-argument due to "javawe.exe.server.unexpected-quit/exeption.javawe Crash in crash log"
+		message "{@logo} %player-argument% has been fake-crashed"
+
+command /fakeop <player>:
+	permission: troll.fakeop
+	permission message: "&c&lHey, you can't do that"
+	trigger:
+		if player-argument is not set:
+			message "Please set a player"
+			stop
+		send "&7[Server: %command sender% opped %player-argument%]" to command sender
+		message "{@logo} %player-argument% has been fake-opped"
+	
+command /lavatroll <player>:
+	permission: troll.lava
+	permission message: "&c&lHey, you can't do that"
+	trigger:
+		if player-argument is not set:
+			message "Please set a player"
+			stop
+		set block above player-argument to lava
+		message "{@logo} Lava has been placed above %player-argument%"
+
+command /fakeopall:
+	permission: troll.fakeopall
+	permission message: "&c&lHey, you can't do that"
+	trigger:
+		broadcast "&7[Server: %command sender% opped %player-argument%]"
+
+
+
+
+
